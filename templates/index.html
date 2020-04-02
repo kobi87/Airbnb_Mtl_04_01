@@ -1,168 +1,176 @@
 <!DOCTYPE html>
 <html >
-<div class="header">
-  <img  src="https://capcubed.com/wp-content/uploads/2018/04/Home-page-banner@4x.png" background-size: 50%; style = "padding: 30px 30px 30px; width: 100%; height: 350px; Background-position: center center; font-size: 50px; font-family: Arial;">
-</div>  
-<!--From https://codepen.io/frytyler/pen/EGdtg-->
 <head>
-  <meta charset="UTF-8">
-  <title>ML API</title>
-  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <title>Mtl Airbnb</title>
+    <meta charset="UTF-8"> 
+    <style>
+    * {
+        margin: 0px;
+        padding: 0px;
+        }
+    body{
+        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSCVAZmXjZ8XSN6Mijd-C9nnuKsx1mHWsHGuWErIyOl34Z8cIE5");
+        background-repeat: no-repeat;
+        background-size: 5024px;
+        }    
+    div#container { 
+        width: 80%;
+        margin: 0px auto;
+        }
+    section#topbar {
+        height: 250px;
+        }
+    section#leftbar {
+        height: 600px;
+        width: 650px;
+        float: left;
+        margin-left: 500px;
+        }     
+    section#mainbar {
+        background-color:red;
+        height: 0px; 
+        }   
   
+    </style>
 </head>
 
-<body><center>
-<div class='bottom' style = "width: 100%; height: 700px; Background-position: center center;"> 
- <div class="login">
-  <style>
-    body{
-   background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSCVAZmXjZ8XSN6Mijd-C9nnuKsx1mHWsHGuWErIyOl34Z8cIE5");
-   background-repeat: no-repeat;
-   background-size: 100%;
-    }
-</style> 
-	<h1 style = " padding: 10px 10px 10px; width: 100%; height: 70px; Background-position: center center; font-size: 40px; font-family: Arial; ">Prédiction du prix d'une chambre/Appartement à Montréal</h1>
-
-<!-- Main Input For Receiving Query to our ML -->
-<form action="{{ url_for('predict')}}"method="post">
-<div class="list" style="font-size: 25px; font-family: Arial;" >
-  <strong><label for="arrondissement">Choisir un arrondissement:</label>	</strong>
-  <select id="Quartier" name="Quartier" style="font-size: 22px; padding: 5px; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
-    <option value="0"> </option>
-  	<option value="1"> Montréal-Nord </option>
-    <option value="2"> Anjou </option>
-    <option value="3"> Rivière-des-Prairies-Pointe-aux-Trembles </optioadtapte n>
-    <option value="4"> Sainte-Anne-de-Bellevue </option>
-    <option value="5"> Villeray-Saint-Michel-Parc-Extension </option>
-    <option value="6"> Saint-Léonard </option>
-    <option value="7"> Ahuntsic-Cartierville </option>
-    <option value="8"> LaSalle </option>
-    <option value="9"> Mercier-Hochelaga-Maisonneuve </option>
-    <option value="10"> Pierrefonds-Roxboro </option>
-    <option value="11"> Verdun </option>
-    <option value="12"> Côte-des-Neiges-Notre-Dame-de-Grâce	 </option>
-    <option value="13"> Hampstead </option>
-    <option value="14"> Montréal-Ouest </option>
-    <option value="15"> Lachine </option>
-    <option value="16"> Rosemont-La Petite-Patrie </option>
-    <option value="17"> Dollard-des-Ormeaux </option>
-    <option value="18"> Pointe-Claire </option>
-    <option value="19"> Dorval </option>
-    <option value="20"> Beaconsfield </option>
-    <option value="21"> Saint-Laurent </option>
-    <option value="22"> Mont-Royal </option>
-    <option value="23"> Côte-Saint-Luc </option>
-    <option value="24"> Kirkland </option>
-    <option value="25"> Le Sud-Ouest </option>
-    <option value="26"> Le Plateau-Mont-Royal </option>
-    <option value="27"> Outremont </option>
-    <option value="28"> Baie-d'Urfé </option>
-    <option value="29"> Ville-Marie	 </option>
-    <option value="30"> Westmount </option>
-    <option value="31"> L'Île-Bizard-Sainte-Geneviève </option>
-  </select>
-
-  <strong><label for="propriété">Choisir un type de propriété:</label>	</strong>
-  <select id="propriété" name="propriété" style="font-size: 22px; padding: 5px; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
-    <option value="7"> </option>
-    <option value="0"> Apartment </option>
-  	<option value="1"> Copropriété </option>
-    <option value="2"> Maison </option>
-    <option value="4"> Maison de ville </option>
-    <option value="5"> Appartement avec services  </option>
-    <option value="6"> Loft </option>
-    <option value="3"> Autre </option>
-  </select>
-
-  <strong><label for="chambre">Choisir un type de chambre / appartement:</label>	</strong>
-  <select id="Type de chambre" name="Type de chambre" style="font-size: 22px; padding: 5px; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
-    <option value="0"> </option>
-    <option value="1">Chambre privée</option>
-    <option value="2">Appartement / Maison</option>
-    <option value="3">Chambre partagé</option>
-    <option value="4">Chambre d'hôtel</option>
-  </select>	
-
-  <select id="Accueille" name="Accueille" style="font-size: 22px; padding: 5px; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
-  	<option value="1"> 1 voyageur </option>
-    <option value="2"> 2 voyageurs </option>
-    <option value="3"> 3 voyageurs  </optioadtapte n>
-    <option value="4"> 4 voyageurs  </option>
-    <option value="5"> 5 voyageurs  </option>
-    <option value="6"> 6 voyageurs  </option>
-    <option value="7"> 7 voyageurs  </option>
-    <option value="8"> 8 voyageurs  </option>
-    <option value="9"> 9 voyageurs  </option>
-    <option value="10"> 10 voyageurs </option>
-    <option value="11"> 11 voyageurs </option>
-    <option value="12"> 12 voyageurs </option>
-    <option value="13"> 13 voyageurs </option>
-    <option value="14"> 14 voyageurs </option>
-    <option value="15"> 15 voyageurs </option>
-    <option value="16"> 16 voyageurs </option>
-    <option value="17"> 17 voyageurs </option>
-    <option value="18"> 18 voyageurs </option>
-  </select>
-
-  <input type="text" name="Nombre de chambres" placeholder="Nombre de chambres" style="font-size: 20px; padding: 5px; margin-right: 1.5em; margin-top: 1.5em; " required="required"/> 
-  <input type="text" name="Nombre de lits" placeholder="Nombre de lits" style="font-size: 20px; padding: 5px; margin-right: 1.5em; margin-top: 1.5em; " required="required"/> 
-  
-  <strong><label for="Type de lit">Type de lit:</label>	</strong>
-  <select id="Type de lit" name="Type de lit" style="font-size: 22px; padding: 5px; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
-    <option value="2">  </option>
-    <option value="1"> Lit </option>
-    <option value="0"> Futon </option>
-    <option value="0"> Canapé gigogne </optioadtapte n>
-    <option value="0"> Canapé  </option>
-    <option value="0"> Matelas pneumatique </option>
-  </select>
-
-  <input type="text" name="Disponibilité" placeholder="Durée de la disponibilité" style="font-size: 20px; padding: 5px; margin-top: 1.5em; " required="required"/>
-  <strong> <label for="Jours" style="margin-right: 1.5em;">Jours</label>	</strong>
-
-  <strong><label for="À réserver instantanément">À réserver instantanément ?:</label>	</strong>
-  <select id="réserver" name="réserver" style="font-size: 22px; padding: 5px; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
-    <option value="3">  </option>
-    <option value="2"> Oui</option>
-    <option value="1"> Non </option>
-  </select>
-
-  <strong><label for="êtes-vous SuperHôte ?">Êtes-vous SuperHôte ?:</label>	</strong>
-  <select id="SuperHôte" name="SuperHôte" style="font-size: 22px; padding: 5px; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
-    <option value="2">  </option>
-    <option value="0"> Oui</option>
-    <option value="1"> Non </option>
-  </select>
-
-  <input type="text" name="Nombre de avis" placeholder="Nombre de avis" style="font-size: 20px; padding: 5px; margin-top: 1.5em; " required="required"/>
-  <strong> <label for="avis" style="margin-right: 1.5em;">Avis</label>	</strong>
-
-  <input type="text" name="Scores Évaluation" placeholder="Scores Évaluation" style="font-size: 20px; padding: 5px; margin-top: 1.5em; " required="required"/>
-  <strong> <label for="%" >%</label>	</strong>
-
-</div>  
-  <button href="#" type="submit" class="btn btn-primary btn-block btn-large" style = "font-size: 22px; padding: 15px 32px; margin-top: 1.5em; font-family: Arial; background-color: #008CBA; /* Green */ border: 2px solid rgb(33, 39, 34); color: white; text-align: center; text-decoration: none; display: inline-block;  cursor: pointer; transition-duration: 0.4s; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);"> <strong>Prédiction du prix</strong></button>
-</form>
-<br>
-<br>
-<h3 style="font-size: 25px;"><center>{{ prediction_text }}<h3>
-  <style>
-   img {
-     height: 100%;
-     width: 100%;
-     align:center;
-   
-          }
-   </style>
-   
-   <body>
-   <div class='bottom'>
-   <img src="https://statics.lesinrocks.com/content/thumbs/uploads/2019/11/width-1125-height-612-quality-10/airbnb-3399753-1920.jpg" style="height: 800px;">
-   <div class="copyr">© 2020 by bewave.</div>
-   </div>
-     
+<body>
+    <div id="container">
+        <section id="topbar">
+            <img  src="https://capcubed.com/wp-content/uploads/2018/04/Home-page-banner@4x.png" background-size: 50%; style = " padding: 0px 120px; width: 80%; height: 250px; Background-position: center center center; font-size: 50px; font-family: Arial;">
+        </section>   
+        
+        <section id="leftbar">
+            <h1 style = " padding: 10px 10px 10px; margin-bottom: 2.5em;  width: 100%; height: 30px; Background-position: center center; font-size: 20px; font-family: Arial; ">Prédiction du prix d'une chambre/Appartement à Montréal</h1>
+                    <!-- Main Input For Receiving Query to our ML -->
+        <form action="{{ url_for('predict')}}"method="post">
+            <div class="row"></div>
+            <div class="list" style="font-size: 17.5px; font-family: Arial;" >
+                <strong><label for="arrondissement">Choisir un arrondissement:</label>	</strong>
+                <select id="Quartier" name="Quartier" style="font-size: 15px; padding: 5px; margin-left: 1.5em; margin-bottom: 1.5em ; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
+                <option value="0"> </option>
+                <option value="1"> Montréal-Nord </option>
+                <option value="2"> Anjou </option>
+                <option value="3"> Rivière-des-Prairies-Pointe-aux-Trembles </optioadtapte n>
+                <option value="4"> Sainte-Anne-de-Bellevue </option>
+                <option value="5"> Villeray-Saint-Michel-Parc-Extension </option>
+                <option value="6"> Saint-Léonard </option>
+                <option value="7"> Ahuntsic-Cartierville </option>
+                <option value="8"> LaSalle </option>
+                <option value="9"> Mercier-Hochelaga-Maisonneuve </option>
+                <option value="10"> Pierrefonds-Roxboro </option>
+                <option value="11"> Verdun </option>
+                <option value="12"> Côte-des-Neiges-Notre-Dame-de-Grâce	 </option>
+                <option value="13"> Hampstead </option>
+                <option value="14"> Montréal-Ouest </option>
+                <option value="15"> Lachine </option>
+                <option value="16"> Rosemont-La Petite-Patrie </option>
+                <option value="17"> Dollard-des-Ormeaux </option>
+                <option value="18"> Pointe-Claire </option>
+                <option value="19"> Dorval </option>
+                <option value="20"> Beaconsfield </option>
+                <option value="21"> Saint-Laurent </option>
+                <option value="22"> Mont-Royal </option>
+                <option value="23"> Côte-Saint-Luc </option>
+                <option value="24"> Kirkland </option>
+                <option value="25"> Le Sud-Ouest </option>
+                <option value="26"> Le Plateau-Mont-Royal </option>
+                <option value="27"> Outremont </option>
+                <option value="28"> Baie-d'Urfé </option>
+                <option value="29"> Ville-Marie	 </option>
+                <option value="30"> Westmount </option>
+                <option value="31"> L'Île-Bizard-Sainte-Geneviève </option>
+                </select>
+            
+                <strong><label for="propriété">Choisir un type de propriété:</label>	</strong>
+                <select id="propriété" name="propriété" style="font-size: 15px; padding: 5px; margin-left: 1.5em; margin-bottom: 1.5em ; margin-right: 8.5em; background-color: rgb(148, 195, 241);" >
+                <option value="7"> </option>
+                <option value="0"> Apartment </option>
+                <option value="1"> Copropriété </option>
+                <option value="2"> Maison </option>
+                <option value="4"> Maison de ville </option>
+                <option value="5"> Appartement avec services  </option>
+                <option value="6"> Loft </option>
+                <option value="3"> Autre </option>
+                </select>
+            
+                <strong><label for="chambre">Choisir un type de chambre / appartement:</label>	</strong>
+                <select id="Type de chambre" name="Type de chambre" style="font-size: 15px; padding: 5px; margin-left: 1.5em; margin-bottom: 1.5em ; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
+                <option value="0"> </option>
+                <option value="1">Chambre privée</option>
+                <option value="2">Appartement / Maison</option>
+                <option value="3">Chambre partagé</option>
+                <option value="4">Chambre d'hôtel</option>
+                </select>	
+            
+                <select id="Accueille" name="Accueille" style="font-size: 15px; padding: 5px; margin-bottom: 1.5em ; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
+                <option value="1"> 1 voyageur </option>
+                <option value="2"> 2 voyageurs </option>
+                <option value="3"> 3 voyageurs  </optioadtapte n>
+                <option value="4"> 4 voyageurs  </option>
+                <option value="5"> 5 voyageurs  </option>
+                <option value="6"> 6 voyageurs  </option>
+                <option value="7"> 7 voyageurs  </option>
+                <option value="8"> 8 voyageurs  </option>
+                <option value="9"> 9 voyageurs  </option>
+                <option value="10"> 10 voyageurs </option>
+                <option value="11"> 11 voyageurs </option>
+                <option value="12"> 12 voyageurs </option>
+                <option value="13"> 13 voyageurs </option>
+                <option value="14"> 14 voyageurs </option>
+                <option value="15"> 15 voyageurs </option>
+                <option value="16"> 16 voyageurs </option>
+                <option value="17"> 17 voyageurs </option>
+                <option value="18"> 18 voyageurs </option>
+                </select>
+            
+                <input type="text" name="Nombre de chambres" placeholder="Nombre de chambres" style="font-size: 15px; padding: 5px; margin-right: 1.5em; margin-bottom: 1.5em; " required="required"/> 
+                <input type="text" name="Nombre de lits" placeholder="Nombre de lits" style="font-size: 15px; padding: 5px; margin-right: 1.5em; margin-bottom: 1.5em; " required="required"/> 
+                
+                <strong><label for="Type de lit">Type de lit:</label>	</strong>
+                <select id="Type de lit" name="Type de lit" style="font-size: 15px; padding: 5px; margin-bottom: 1.5em ; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
+                <option value="2">  </option>
+                <option value="1"> Lit </option>
+                <option value="0"> Futon </option>
+                <option value="0"> Canapé gigogne </optioadtapte n>
+                <option value="0"> Canapé  </option>
+                <option value="0"> Matelas pneumatique </option>
+                </select>
+            
+                <input type="text" name="Disponibilité" placeholder="Durée de la disponibilité" style="font-size: 15px; padding: 5px; margin-bottom: 1.5em; " required="required"/> 
+                <strong> <label for="Jours" style="margin-right: 4.5em;">Jours</label>	</strong>
+            
+                <strong><label for="À réserver instantanément">À réserver instantanément ?:</label>	</strong>
+                <select id="réserver" name="réserver" style="font-size: 15px; padding: 5px; margin-bottom: 1.5em ; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
+                <option value="3">  </option>
+                <option value="2"> Oui</option>
+                <option value="1"> Non </option>
+                </select>
+            
+                <strong><label for="êtes-vous SuperHôte ?">Êtes-vous SuperHôte ?:</label>	</strong>
+                <select id="SuperHôte" name="SuperHôte" style="font-size: 15px; padding: 5px; margin-bottom: 1.5em ; margin-right: 1.5em; background-color: rgb(148, 195, 241);" >
+                <option value="2">  </option>
+                <option value="0"> Oui</option>
+                <option value="1"> Non </option>
+                </select>
+            
+                <input type="text" name="Nombre de avis" placeholder="Nombre de avis" style="font-size: 15px; padding: 5px; margin-bottom: 1.5em; " required="required"/> 
+                <strong> <label for="avis" style="margin-right: 1.5em;">Avis</label></strong>
+            
+                <input type="text" name="Scores Évaluation" placeholder="Scores Évaluation" style="font-size: 15px; padding: 5px; margin-bottom: 1.5em; " required="required"/> 
+                <strong> <label for="%" >%</label>	</strong>
+                
+                <button href="#" type="submit" class="btn btn-primary btn-block btn-large" style = "font-size: 18px; padding: 15px; margin-top: 1.2em; margin-left: 12.5em; margin-bottom: 1.1em; font-family: Arial; background-color: #008CBA; /* Green */ border: 2px solid rgb(33, 39, 34); color: white; text-align: center; text-decoration: none; display: inline-block;  cursor: pointer; transition-duration: 0.4s; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);"><strong>Prédiction du prix</strong></button>
+            </form>
+                <h3 style="font-size: 20px;"><center>{{ prediction_text }}<h3> 
+            </div>  
+            </div>
+           
+        </section> 
+        <section id="mainbar">
+            <img src="https://statics.lesinrocks.com/content/thumbs/uploads/2019/11/width-1125-height-612-quality-10/airbnb-3399753-1920.jpg" background-size: 100%; style = " padding: 0px 0px; width: 100%; height: 400px; Background-position: center center center; font-size: 50px; font-family: Arial;">
+            <center><div class="copyr" style="font-size: 20px;">© 2020 by bewave.</div></center>
+        </section> 
+    </div><!-- end of container-->
 </body>
 </html>
