@@ -19,7 +19,7 @@ def predict():
     final_features = [np.array(int_features)]
     prediction = model.predict(final_features)
 
-    output = round(prediction[0], 2)
+    output = np.round(10 ** prediction[0], 2)
 
     return render_template('index.html', prediction_text='Le prix d une chambre/Appartement devrait être $ {}'.format(output))
 

@@ -16,14 +16,13 @@ x = airbnb_en.drop(['price'], axis=1)
 
 # use log10 for the price for a good result
 y = airbnb_en['price'].values
-#y = np.log10(y)
+y = np.log10(y)
 
 #Getting Test and Training Set
-x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=.1,random_state=353)
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=.1,random_state=42)
 
 selected_feat=['neighbourhood','property_type', 'room_type', 'accommodates', 'bedrooms', 'beds', 'bed_type',
-       'cleaning_fee', 'extra_people', 'availability_365', 'instant_bookable', 
-        'host_is_superhost', 'number_of_reviews', 'review_scores_rating']
+       'availability_365', 'instant_bookable', 'host_is_superhost', 'number_of_reviews', 'review_scores_rating']
 
 x_train=x_train[selected_feat]
 x_test =x_test[selected_feat]
